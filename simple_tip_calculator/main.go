@@ -5,18 +5,26 @@ import (
 )
 
 func main() {
-	var bill_amount, tip_percent, tip_amount, total_amount float64
+	var billAmount, tipPercent, tipAmount, totalAmount float64
 
 	fmt.Print("Enter total bill amount: ")
-	fmt.Scan(&bill_amount)
+	fmt.Scan(&billAmount)
+	if billAmount <= 0 {
+		fmt.Println("Error: Bill amount must be greater than zero.")
+		return
+	}
 
 	fmt.Print("Enter tip percentage: ")
-	fmt.Scan(&tip_percent)
+	fmt.Scan(&tipPercent)
+	if tipPercent < 0 {
+		fmt.Println("Error: Tip percentage cannot be negative.")
+		return
+	}
 
-	tip_amount = bill_amount * (tip_percent / 100)
+	tipAmount = billAmount * (tipPercent / 100)
 
-	total_amount = bill_amount + tip_amount
+	totalAmount = billAmount + tipAmount
 
-	fmt.Printf("Tip amount: $%.2f\n", tip_amount)
-	fmt.Printf("Total amount: $%.2f\n", total_amount)
+	fmt.Printf("Tip amount: $%.2f\n", tipAmount)
+	fmt.Printf("Total amount: $%.2f\n", totalAmount)
 }
