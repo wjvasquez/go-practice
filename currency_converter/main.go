@@ -7,14 +7,14 @@ import (
 
 func main() {
 	const exchangeRate = 4000
-	var moneyAmout, moneyConverted float64
+	var moneyAmount, convertedAmount float64
 	var sourceCurrency, targetCurrency string
 
 	fmt.Print("Enter the amount to convert: ")
-	fmt.Scan(&moneyAmout)
+	fmt.Scan(&moneyAmount)
 
-	if moneyAmout < 0 {
-		fmt.Println("Error: The amount to convert must be a positive number.")
+	if moneyAmount <= 0 {
+		fmt.Println("Error: Please enter an amount greater than 0.")
 		return
 	}
 
@@ -24,7 +24,14 @@ func main() {
 	fmt.Print("Choose target currency (USD): ")
 	fmt.Scan(&targetCurrency)
 
-	moneyConverted = moneyAmout / exchangeRate
+	if strings.ToUpper(sourceCurrency) != "COP" || strings.ToUpper(targetCurrency) != "USD" {
+		fmt.Println("Error: Sopported conversion is only from COP to USD.")
+		return
+	}
 
-	fmt.Printf("%.2f %s is equal to %.2f %s\n", moneyAmout, strings.ToUpper(sourceCurrency), moneyConverted, strings.ToUpper(targetCurrency))
+	convertedAmount = moneyAmount / exchangeRate
+
+	fmt.Printf("%.2f %s is equal to %.2f %s\n",
+			moneyAmount, strings.ToUpper(sourceCurrency),
+			convertedAmount, strings.ToUpper(targetCurrency))
 }
