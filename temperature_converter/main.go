@@ -8,6 +8,7 @@ import (
 func main() {
 	var tempInput, tempConverted float64
 	var givenUnit, targetUnit string
+	validUnits := map[string]bool{"celsius": true, "fahrenheit": true, "kelvin": true}
 
 	fmt.Print("Enter the temperature: ")
 	fmt.Scan(&tempInput)
@@ -15,26 +16,23 @@ func main() {
 	fmt.Print("Enter the unit of the temperature (Celsius, Fahrenheit or Kelvin): ")
 	fmt.Scan(&givenUnit)
 
-	if strings.ToLower(givenUnit) != "celsius" && strings.ToLower(givenUnit) != "fahrenheit" &&
-	strings.ToLower(givenUnit) != "kelvin" {
-		fmt.Println(givenUnit)
+	if !validUnits[strings.ToLower(givenUnit)] {
 		fmt.Println("Error: Unsupported unit. Please use Celsius, Fahrenheit or Kelvin.")
 		return
 	}
 
-	fmt.Print("Enter the target unit (Celcius, Fahrenheit or Kelvin): ")
+	fmt.Print("Enter the target unit (Celsius, Fahrenheit or Kelvin): ")
 	fmt.Scan(&targetUnit)
 
-	if strings.ToLower(targetUnit) != "celsius" && strings.ToLower(targetUnit) != "fahrenheit" &&
-	strings.ToLower(targetUnit) != "kelvin" {
+	if !validUnits[strings.ToLower(targetUnit)] {
 		fmt.Println("Error: Unsupported unit. Please use Celsius, Fahrenheit or Kelvin.")
 		return
 	}
 
-	switch givenUnit {
+	switch strings.ToLower(givenUnit) {
 	case "celsius":
 		if strings.ToLower(targetUnit) == "fahrenheit" {
-			tempConverted = (tempInput * 9 / 5) + 32
+			tempConverted = (tempInput * 9.0 / 5.0) + 32
 		} else if strings.ToLower(targetUnit) == "kelvin" {
 			tempConverted = tempInput + 273.15
 		} else {
@@ -42,10 +40,9 @@ func main() {
 		}
 	case "fahrenheit":
 		if strings.ToLower(targetUnit) == "celsius" {
-			tempConverted = (tempInput  - 32) * (5 / 9)
+			tempConverted = (tempInput  - 32) * (5.0 / 9.0)
 		} else if strings.ToLower(targetUnit) == "kelvin" {
-			tempConverted =  ( 5 * (tempInput - 32)) / 9 + 273.15
-			fmt.Println("Hello!")
+			tempConverted =  ( 5.0 * (tempInput - 32)) / 9.0 + 273.15
 		} else {
 			tempConverted = tempInput
 		}
@@ -53,7 +50,7 @@ func main() {
 		if strings.ToLower(targetUnit) == "celsius" {
 			tempConverted = tempInput - 273.15
 		} else if strings.ToLower(targetUnit) == "fahrenheit" {
-			tempConverted = (9 / 5) * (tempInput - 459.67)
+			tempConverted = (9.0 / 5.0) * (tempInput - 459.67)
 		} else {
 			tempConverted = tempInput
 		}
