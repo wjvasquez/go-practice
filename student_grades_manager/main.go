@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"slices"
+	"strings"
 )
 
 func main() {
@@ -10,8 +11,9 @@ func main() {
 		lowestGrade, studentGrade int
 	var averageGrade float64
 	var studentGrades []int
-	var studentName, highestGradeStudent, lowestGradeStudent string
+	var studentName string
 	var studentNames []string
+	var highestGradeStudents, lowestGradeStudents []string
 
 	fmt.Print("Enter the number of students: ")
 	fmt.Scan(&numberStudents)
@@ -46,15 +48,22 @@ func main() {
 	for i := 0; i < len(studentGrades); i++ {
 		sumGrades = sumGrades + studentGrades[i]
 	}
+
 	averageGrade = float64(sumGrades) / float64(len(studentGrades))
 
 	highestGrade = slices.Max(studentGrades)
 	lowestGrade = slices.Min(studentGrades)
 
-	highestGradeStudent = studentNames[slices.Index(studentGrades, highestGrade)]
-	lowestGradeStudent = studentNames[slices.Index(studentGrades, lowestGrade)]
+	for i, grade := range studentGrades {
+		if grade == highestGrade {
+			highestGradeStudents = append(highestGradeStudents, studentNames[i])
+		}
+		if grade == lowestGrade {
+			lowestGradeStudents = append(lowestGradeStudents, studentNames[i])
+		}
+	}
 
 	fmt.Printf("Average grade: %.2f\n", averageGrade)
-	fmt.Printf("Highest grade: %d (%s) \n", highestGrade, highestGradeStudent)
-	fmt.Printf("Lowest grade: %d (%s) \n", lowestGrade, lowestGradeStudent)
+	fmt.Printf("Highest grade: %d (%s) \n", highestGrade, strings.Join(highestGradeStudents, ", "))
+	fmt.Printf("Lowest grade: %d (%s) \n", lowestGrade, strings.Join(lowestGradeStudents, ", "))
 }
