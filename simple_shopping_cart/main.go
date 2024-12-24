@@ -5,57 +5,68 @@ import (
 )
 
 func main() {
-	var menuOption, productQuantity int
-	var productName string
-	var productPrice, finalBill float64
-	isMenuActive := true
-	shoppingCart := make(map[string]float64)
+	type Product struct {
+		Name     string
+		Price    float64
+		Quantity int
+	}
 
-	fmt.Printf("Welcome to the Simple Shopping Cart!\n\n")
+	var menuOption int
+	var finalBill float64
+	isMenuActive := true
+	var shoppingCart []Product
+
+	fmt.Printf("\nWelcome to the Simple Shopping Cart!\n")
 
 	for {
 
-		fmt.Printf("1. Add Product\n")
+		fmt.Printf("\n1. Add Product\n")
 		fmt.Printf("2. View Cart\n")
-		fmt.Printf("3. Checkout\n\n")
+		fmt.Printf("3. Checkout\n")
 
-		fmt.Print("Choose an option: ")
-		fmt.Scan(&menuOption)
+		fmt.Print("\nChoose an option: ")
+		fmt.Scanln(&menuOption)
 
 		switch menuOption {
 		case 1:
+			product := Product{}
+
 			fmt.Print("\nEnter Product name: ")
-			fmt.Scanln(&productName)
+			fmt.Scanln(&product.Name)
 			fmt.Print("Enter product price: ")
-			fmt.Scanln(&productPrice)
+			fmt.Scanln(&product.Price)
+
+			if product.Price <= 0 {
+				fmt.Println("Error: Price must be a positive value.")
+				return
+			}
+
 			fmt.Print("Enter product quantity: ")
-			fmt.Scanln(&productQuantity)
+			fmt.Scanln(&product.Quantity)
 
-			shoppingCart[productName] = productPrice
+			if product.Quantity <= 0 {
+				fmt.Println("Error: Quantity must be greater than zero.")
+				return
+			}
 
-			fmt.Printf("\nProduct added to the cart!\n\n")
+			shoppingCart = append(shoppingCart, product)
+
+			fmt.Printf("\nProduct added to the cart!\n")
 
 		case 2:
-			i := 1
-
 			fmt.Printf("\nCart:\n")
-			for product, price := range shoppingCart {
-				fmt.Printf("%d. %s - $%.2f X %d = $%.2f\n\n", i, product, price,
-					productQuantity, float64(productQuantity) * price)
-				i += 1
+			for i, product := range shoppingCart {
+				fmt.Printf("%d. %s - $%.2f X %d = $%.2f\n", i+1, product.Name,
+					product.Price, product.Quantity, float64(product.Quantity)*product.Price)
 			}
 
 		case 3:
-			i := 1
-
 			fmt.Printf("\nFinal Bill:\n")
-			for product, price := range shoppingCart {
-				fmt.Printf("%d. %s - $%.2f X %d = $%.2f\n", i, product, price,
-					productQuantity, float64(productQuantity) * price)
+			for i, product := range shoppingCart {
+				fmt.Printf("%d. %s - $%.2f X %d = $%.2f\n", i+1, product.Name,
+					product.Price, product.Quantity, float64(product.Quantity)*product.Price)
 
-				finalBill += float64(productQuantity) * price
-
-				i += 1
+				finalBill += float64(product.Quantity) * product.Price
 			}
 
 			fmt.Printf("Total: $%.2f\n", finalBill)
