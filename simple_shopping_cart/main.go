@@ -37,16 +37,16 @@ func main() {
 			fmt.Scanln(&product.Price)
 
 			if product.Price <= 0 {
-				fmt.Println("Error: Price must be a positive value.")
-				return
+				fmt.Println("Error: Price must be a positive value. Try again.")
+				continue
 			}
 
 			fmt.Print("Enter product quantity: ")
 			fmt.Scanln(&product.Quantity)
 
 			if product.Quantity <= 0 {
-				fmt.Println("Error: Quantity must be greater than zero.")
-				return
+				fmt.Println("Error: Quantity must be greater than zero. Try again.")
+				continue
 			}
 
 			shoppingCart = append(shoppingCart, product)
@@ -55,9 +55,14 @@ func main() {
 
 		case 2:
 			fmt.Printf("\nCart:\n")
-			for i, product := range shoppingCart {
-				fmt.Printf("%d. %s - $%.2f X %d = $%.2f\n", i+1, product.Name,
-					product.Price, product.Quantity, float64(product.Quantity)*product.Price)
+			if len(shoppingCart) == 0 {
+				fmt.Println("\nYour cart is empty.")
+				continue
+			} else {
+				for i, product := range shoppingCart {
+					fmt.Printf("%d. %s - $%.2f X %d = $%.2f\n", i+1, product.Name,
+						product.Price, product.Quantity, float64(product.Quantity)*product.Price)
+				}
 			}
 
 		case 3:
