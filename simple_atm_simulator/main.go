@@ -5,20 +5,26 @@ import (
 )
 
 func main() {
-	var balance, depositAmount, withdrawalAmount float64
-	var menuOption int
+	var balance float64
 	isMenuActive := true
 
 	fmt.Printf("\nWelcome to the simple ATM!\n")
 
 	for {
+		var depositAmount, withdrawalAmount float64
 		fmt.Printf("\n1. Check Balance\n")
 		fmt.Printf("2. Deposit Money\n")
 		fmt.Printf("3. Withdraw Money\n")
 		fmt.Printf("4. Exit\n")
-
 		fmt.Print("Choose an option: ")
-		fmt.Scanln(&menuOption)
+
+		var menuOption int
+		_, err := fmt.Scanln(&menuOption)
+
+		if err != nil {
+			fmt.Println("\nInvalid input. Please enter a number between 1 and 4.")
+			continue
+		}
 
 		switch menuOption {
 		case 1:
