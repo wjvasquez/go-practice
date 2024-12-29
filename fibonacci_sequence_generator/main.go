@@ -7,11 +7,12 @@ import (
 )
 
 func fibonacci(n int) []int {
-	fibonacciSeq := []int{0, 1}
 
 	if n == 1 {
 		return []int{0}
 	}
+
+	fibonacciSeq := []int{0, 1}
 
 	for i := 2; i < n; i++ {
 		fibonacciSeq = append(fibonacciSeq, fibonacciSeq[i-1]+fibonacciSeq[i-2])
