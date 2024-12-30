@@ -5,38 +5,23 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"unicode"
 )
 
 func wordCount(sentence string) int {
 	sentence = strings.TrimSpace(sentence)
 
-	if len(sentence) == 0 {
-		return 0
-	}
+	words := strings.Fields(sentence)
 
-	word := ""
-	words := 1
-
-	for _, chacarter := range sentence {
-		word += string(chacarter)
-
-		if unicode.IsSpace(chacarter) {
-			words++
-			word = ""
-		}
-	}
-
-	return words
+	return len(words)
 }
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
-	var sentence string
 
 	fmt.Println("\nWord Counter")
 	fmt.Print("Enter a sentence: ")
-	sentence, _ = reader.ReadString('\n')
+	sentence, _ := reader.ReadString('\n')
 
-	fmt.Printf("The sentence contains %d words.\n", wordCount(sentence))
+	wordCount := wordCount(sentence)
+	fmt.Printf("The sentence contains %d words.\n", wordCount)
 }
