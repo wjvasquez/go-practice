@@ -11,7 +11,6 @@ import (
 
 func getNumber() (int, error) {
 	reader := bufio.NewReader(os.Stdin)
-
 	input, err := reader.ReadString('\n')
 	if err != nil {
 		return 0, fmt.Errorf("Error reading input: %v", err)
@@ -70,12 +69,12 @@ func main() {
 
 		fmt.Printf("Result: %.2f.\n", result)
 
-		fmt.Printf("\nEnter \"exit\" to finish the program: ")
+		fmt.Printf("\nEnter \"exit\" to finish the program or press Enter to calculate again: ")
 		fmt.Scanln(&offOption)
 
 		if strings.ToLower(offOption) == "exit" {
 			fmt.Println("Thank you for use the Division Calculator.")
-			return
+			break
 		}
 	}
 }
