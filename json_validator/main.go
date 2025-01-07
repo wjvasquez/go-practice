@@ -9,16 +9,12 @@ import (
 	"strings"
 )
 
-func validJsonFormat(jsonStr string) (string, error) {
-	var validStrFormat bool
-
+func validateJSON(jsonStr string) (string, error) {
 	if len(jsonStr) == 0 {
 		return "", errors.New("JSON string cannot be empty.")
 	}
 
-	validStrFormat = json.Valid([]byte(jsonStr))
-
-	if !validStrFormat {
+	if !json.Valid([]byte(jsonStr)) {
 		return "", errors.New("Invalid JSON format.")
 	}
 
@@ -31,16 +27,16 @@ func main() {
 
 	fmt.Println("JSON Validator")
 	for {
-		var jsonString, validStrFormat string
+		var jsonString, validationMessage string
 
 		fmt.Print("\nEnter a JSON string: ")
 		jsonString, _ = reader.ReadString('\n')
 		jsonString = strings.TrimSpace(jsonString)
 
-		validStrFormat, err := validJsonFormat(jsonString)
+		validationMessage, err := validateJSON(jsonString)
 
 		if err != nil {
-			fmt.Println("Errror:", err)
+			fmt.Println("Error:", err)
 			fmt.Print("\nEnter \"exit\" to finish the program or Enter to try again: ")
 			fmt.Scanln(&offOption)
 			if strings.ToLower(offOption) == "exit" {
@@ -49,7 +45,7 @@ func main() {
 			continue
 		}
 
-		fmt.Println(validStrFormat)
+		fmt.Println(validationMessage)
 		fmt.Print("\nEnter \"exit\" to finish the program or Enter to validate another JSON string: ")
 		fmt.Scanln(&offOption)
 		if strings.ToLower(offOption) == "exit" {
