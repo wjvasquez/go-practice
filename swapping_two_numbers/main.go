@@ -15,10 +15,20 @@ func main() {
 	var num1, num2 int
 
 	fmt.Print("Enter the first number: ")
-	fmt.Scanln(&num1)
+	_, err := fmt.Scanln(&num1)
+
+	if err != nil {
+		fmt.Println("Error: Invalid input. Please enter a valid integer.")
+		return
+	}
 
 	fmt.Print("Enter the second number: ")
-	fmt.Scanln(&num2)
+	_, err = fmt.Scanln(&num2)
+
+	if err != nil {
+		fmt.Println("Error: Invalid input. Please enter a valid integer.")
+		return
+	}
 
 	fmt.Printf("Before swapping: a = %d, b = %d\n", num1, num2)
 
