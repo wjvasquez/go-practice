@@ -28,6 +28,11 @@ func main() {
 	fmt.Print("Enter the size of the array: ")
 	_, err := fmt.Scanln(&arrayLen)
 
+	if arrayLen <= 0 {
+		fmt.Println("Error: Array size must be a positive integer.")
+		return
+	}
+
 	if err != nil {
 		fmt.Println("Error: The size of the array must be an integer.")
 		return
@@ -40,19 +45,21 @@ func main() {
 	inputDataStr = strings.Split(input, " ")
 
 	if len(inputDataStr) != arrayLen {
-		fmt.Println("Error: The number of elements is different to the Array length.")
+		fmt.Printf("Error: Expected %d elements, but got %d.\n", arrayLen, len(inputDataStr))
 		return
 	}
 
 	for _, element := range inputDataStr {
-		intElement, _ := strconv.Atoi(element)
+		intElement, err := strconv.Atoi(element)
+		if err != nil {
+			fmt.Printf("Error: '%s' is not a valid integer.\n", element)
+			return
+		}
 		originalArray = append(originalArray, intElement)
 	}
 
-	fmt.Printf("Data: %q\n", inputDataStr)
-	fmt.Printf("Data: %v\n", originalArray)
-
+	fmt.Printf("\nOriginal Array: %v\n", originalArray)
+	fmt.Println("\nReversing array...")
 	reverse(&originalArray)
-
-	fmt.Printf("Reversal Data: %v\n", originalArray)
+	fmt.Printf("\nReversed Array: %v\n", originalArray)
 }
